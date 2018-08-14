@@ -2,6 +2,9 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.Cliente;
 
@@ -24,6 +27,32 @@ public class ClienteDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	public List<Cliente> lista() {
+		String sql = "SELECT * FROM clientes";
+		try (PreparedStatement stmt = this.connection.prepareStatement(sql)){
+			try (ResultSet resultSet = stmt.executeQuery()){
+				List<Cliente> listaClientes = new ArrayList<>();
+				while(resultSet.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setClienteId(resultSet.getLong("cliente_id"));
+					cliente.setNome(resultSet.getString("nome"));
+					cliente.setSobrenome(resultSet.getString("sobrenome"));
+					cliente.setCpf(resultSet.getString("cpf"));
+					cliente.setRg(resultSet.getString("rg"));
+					cliente.setSalario(resultSet.getDouble("salario"));
+					listaClientes.add(cliente);
+				}
+				return listaClientes;
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
 		}
 	}
 	
