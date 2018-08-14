@@ -1,5 +1,7 @@
 package dao;
 
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -88,6 +90,17 @@ public class ClienteDAOTest {
 		dao.cadastra(cliente2);
 	}
 	
+	@Test
+	public void testa_listagem_de_clientes() {
+		Cliente cliente = new Cliente();
+		cliente.setNome("Jon");
+		cliente.setSobrenome("Doe");
+		cliente.setRg("009900");
+		cliente.setCpf("828292825");
+		cliente.setSalario(4900.0);
+		dao.cadastra(cliente);
+		assertEquals(1, dao.lista().size());
+	}
 	
 
 }
