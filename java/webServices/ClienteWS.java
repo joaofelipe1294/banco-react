@@ -1,5 +1,8 @@
 package webServices;
 
+import java.sql.Connection;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,6 +15,8 @@ import javax.ws.rs.core.UriInfo;
 
 import com.google.gson.Gson;
 
+import connection.ConnectionFactory;
+import dao.ClienteDAO;
 import models.Cliente;
 
 @Path("cliente")
@@ -27,11 +32,19 @@ public class ClienteWS {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response cadastra(Cliente cliente) {
-		System.out.println(cliente.getNome());
-		String resposta = "DEU BOA";
-		return Response
-				.ok(new Gson().toJson(resposta))
-				.build();
+		try (Connection connection = new ConnectionFactory().getConnection()){
+			ClienteDAO clienteDAO = new ClienteDAO(connection);
+			clienteDAO.cadastra(cliente);
+			connection.commit();
+			List<Cliente> listaClientes = clienteDAO.lista();
+			return Response
+					.ok(new Gson().toJson(listaClientes))
+					.build();
+		} catch (Exception e) {
+			return Response
+					.serverError()
+					.build();
+		}
 	}
 
 	@GET
