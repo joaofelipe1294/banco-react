@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import 'bootstrap'
-import ClienteBox from './components/cliente/FormCliente';
+import ClienteBox from './components/cliente/ClienteBox';
 
 class App extends Component {
   render() {
