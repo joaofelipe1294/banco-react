@@ -54,7 +54,7 @@ export class FormCliente extends Component{
         cliente.sobrenome = this.state.sobrenome;
         cliente.rg = this.state.rg;
         cliente.cpf = this.state.cpf;
-        cliente.salario = this.state.salario;
+        cliente.salario = parseFloat(this.state.salario.replace(',', '.'));
         console.log(cliente);
         $.ajax({
             url: 'http://10.0.1.32:8080/api_gerenciador_de_contas/webresources/cliente',
@@ -63,14 +63,13 @@ export class FormCliente extends Component{
             dataType: 'json',
             data: JSON.stringify(cliente),
             success: function(response){
-                console.log('FOOOOOI')
-                console.log(response);         
-            },
+                this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
+            }.bind(this),
             error: function(xhr,status,error){
                 console.log('Status: ' + status);
                 console.log(xhr);
                 console.log(error);
-                console.log('Errooooo');
+                alert(xhr.responseText);
             }
        });
     }
@@ -131,14 +130,13 @@ export class ListaCliente extends Component{
             type: 'GET',
             dataType: 'json',
             success: function(listaAtualizada){
-                console.log(listaAtualizada)
                 this.setState({listaClientes: listaAtualizada});         
             }.bind(this),
             error: function(xhr,status,error){
                 console.log('Status: ' + status);
                 console.log(xhr);
                 console.log(error);
-                console.log('Errooooo');
+                alert('Não foi possível listar os clientes listados.');
             }
        });
     }
