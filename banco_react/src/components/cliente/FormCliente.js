@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FormGroupGenerico from "../genericos/FormGroupGenerico";
 import Cliente from '../../models/Cliente';
+import $ from 'jquery';
 
 export class FormCliente extends Component{
     constructor (){
@@ -55,7 +56,91 @@ export class FormCliente extends Component{
         cliente.cpf = this.state.cpf;
         cliente.salario = this.state.salario;
         console.log(cliente);
+        $.ajax({
+            url: 'http://10.0.1.32:8080/api_gerenciador_de_contas/webresources/cliente',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(cliente),
+            success: function(response){
+                console.log('FOOOOOI')
+                console.log(response);         
+            },
+            error: function(xhr,status,error){
+                console.log('Status: ' + status);
+                console.log(xhr);
+                console.log(error);
+                console.log('Errooooo');
+            }
+       });
+    }
+}
+
+export class ListaCliente extends Component{
+
+    constructor(){
+        super();
+        this.state = {listaClientes: []};
+    }
+
+    render(){
+        return (
+            <div className = "col-md-11 mt-4 mx-auto">
+                <table className = "table table-striped">
+                    <thead className = "thead-dark">
+                        <tr>
+                            <th>
+                                <h3>Nome</h3>
+                            </th>
+                            <th>
+                                <h3>Sobrenome</h3>
+                            </th>
+                            <th>
+                                <h3>RG</h3>
+                            </th>
+                            <th>
+                                <h3>CPF</h3>
+                            </th>
+                            <th>
+                                <h3>Salário</h3>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.listaClientes.map(function(cliente) {
+                            return(
+                                <tr key = {cliente.clienteId}>
+                                    <td>{cliente.nome}</td>
+                                    <td>{cliente.sobrenome}</td>
+                                    <td>{cliente.rg}</td>
+                                    <td>{cliente.cpf}</td>
+                                    <td>{cliente.salario}</td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        );    
         
+    }
+
+    componentDidMount(){
+        $.ajax({
+            url: 'http://10.0.1.32:8080/api_gerenciador_de_contas/webresources/cliente',
+            type: 'GET',
+            dataType: 'json',
+            success: function(listaAtualizada){
+                console.log(listaAtualizada)
+                this.setState({listaClientes: listaAtualizada});         
+            }.bind(this),
+            error: function(xhr,status,error){
+                console.log('Status: ' + status);
+                console.log(xhr);
+                console.log(error);
+                console.log('Errooooo');
+            }
+       });
     }
 
 }
