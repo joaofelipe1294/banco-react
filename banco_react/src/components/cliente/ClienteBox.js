@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FormGroupGenerico from "../genericos/FormGroupGenerico";
 import Cliente from '../../models/Cliente';
 import $ from 'jquery';
+import PubSub from 'pubsub-js';
 
 export class FormCliente extends Component{
     constructor (){
@@ -55,7 +56,6 @@ export class FormCliente extends Component{
         cliente.rg = this.state.rg;
         cliente.cpf = this.state.cpf;
         cliente.salario = parseFloat(this.state.salario.replace(',', '.'));
-        console.log(cliente);
         $.ajax({
             url: 'http://10.0.1.32:8080/api_gerenciador_de_contas/webresources/cliente',
             type: 'POST',
@@ -64,14 +64,13 @@ export class FormCliente extends Component{
             data: JSON.stringify(cliente),
             success: function(response){
                 this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
+                PubSub.publish('mensagem-erro-cadastro-cliente', null);
             }.bind(this),
             error: function(xhr,status,error){
-                console.log('Status: ' + status);
-                console.log(xhr);
-                console.log(error);
-                alert(xhr.responseText);
+                PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
             }
        });
+       
     }
 }
 
@@ -137,26 +136,34 @@ export class ListaCliente extends Component{
                 console.log(xhr);
                 console.log(error);
                 alert('Não foi possível listar os clientes listados.');
+
             }
        });
     }
-
 }
+
+
 
 export default class ClienteBox extends Component{
     constructor(){
         super();
-        this.state = {error_message: null}
+        this.state = {mensagemDeErro: null}
+    }
+
+    componentDidMount(){
+        PubSub.subscribe('mensagem-erro-cadastro-cliente', function(channel, error){
+            this.setState({mensagemDeErro: error});
+        }.bind(this));
     }
     
     render(){
         var error_element = '';
-        if(this.state.error_message === 'null'){
+        if(this.state.mensagemDeErro === null){
             error_element = '';
         }else{
             error_element = (
-                <div className="alert alert-warning alert-dismissible fade show" role="alert">
-                    AQUI SERAO EXIBIDAS MENSAGENS DE ERRO !!!
+                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                    {this.state.mensagemDeErro}
                     <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -170,7 +177,6 @@ export default class ClienteBox extends Component{
                 <ListaCliente/>
             </div>
         );
-
     }
 
 
