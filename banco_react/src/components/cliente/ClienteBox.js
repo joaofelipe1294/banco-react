@@ -65,6 +65,8 @@ export class FormCliente extends Component{
             success: function(response){
                 this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
                 PubSub.publish('mensagem-erro-cadastro-cliente', null);
+                PubSub.publish('cadastro-efetivado-cliente', response);
+                console.log(response);
             }.bind(this),
             error: function(xhr,status,error){
                 PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
@@ -132,13 +134,12 @@ export class ListaCliente extends Component{
                 this.setState({listaClientes: listaAtualizada});         
             }.bind(this),
             error: function(xhr,status,error){
-                console.log('Status: ' + status);
-                console.log(xhr);
-                console.log(error);
                 alert('Não foi possível listar os clientes listados.');
-
             }
-       });
+        });
+        PubSub.subscribe('cadastro-efetivado-cliente', function(channel, novaListaClientes){
+            this.setState({listaClientes: novaListaClientes});
+        }.bind(this));
     }
 }
 
@@ -147,7 +148,7 @@ export class ListaCliente extends Component{
 export default class ClienteBox extends Component{
     constructor(){
         super();
-        this.state = {mensagemDeErro: null}
+        this.state = {mensagemDeErro: null};
     }
 
     componentDidMount(){
