@@ -3,6 +3,7 @@ import FormGroupGenerico from "../genericos/FormGroupGenerico";
 import Cliente from '../../models/Cliente';
 import $ from 'jquery';
 import PubSub from 'pubsub-js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class FormCliente extends Component{
     constructor (){
@@ -66,7 +67,6 @@ export class FormCliente extends Component{
                 this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
                 PubSub.publish('mensagem-erro-cadastro-cliente', null);
                 PubSub.publish('cadastro-efetivado-cliente', response);
-                console.log(response);
             }.bind(this),
             error: function(xhr,status,error){
                 $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -105,6 +105,7 @@ export class ListaCliente extends Component{
                             <th>
                                 <h3>Salário</h3>
                             </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,6 +117,12 @@ export class ListaCliente extends Component{
                                     <td>{cliente.rg}</td>
                                     <td>{cliente.cpf}</td>
                                     <td>{cliente.salario}</td>
+                                    <td>
+                                        <button className = "btn btn-warning">
+                                            <FontAwesomeIcon icon="edit" className = "text-white" />
+                                        </button>
+
+                                    </td>
                                 </tr>
                             );
                         })}

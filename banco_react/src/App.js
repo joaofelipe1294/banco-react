@@ -3,6 +3,11 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import 'bootstrap'
 import ClienteBox from './components/cliente/ClienteBox';
+import { library } from '@fortawesome/fontawesome-svg-core'
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas);
 
 class App extends Component {
   render() {
