@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import 'bootstrap'
-import {FormCliente, ListaCliente} from './components/cliente/FormCliente';
+import ClienteBox from './components/cliente/FormCliente';
 
 class App extends Component {
   render() {
@@ -27,8 +27,7 @@ class App extends Component {
 
           {/* AQUI COMECA CODIGO DO CLIENTE */}
           
-          <FormCliente/>
-          <ListaCliente/>
+          <ClienteBox/>
 
 
 
