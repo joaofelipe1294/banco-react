@@ -50,12 +50,14 @@ public class ClienteWS {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response lista() {
-		System.out.println("YO ");
-		Cliente cliente = new Cliente();
-		cliente.setNome("Nate Diaz");
-		return Response
-				.ok(new Gson().toJson(cliente))
-				.build();
+		try (Connection connection = new ConnectionFactory().getConnection()){
+			List<Cliente> listaClientes = new ClienteDAO(connection).lista();
+			return Response
+					.ok(new Gson().toJson(listaClientes))
+					.build();
+		} catch (Exception e) {
+			return Response.serverError().build();
+		}
 	}
 
 }
