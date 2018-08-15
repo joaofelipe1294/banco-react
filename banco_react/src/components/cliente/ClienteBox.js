@@ -69,6 +69,7 @@ export class FormCliente extends Component{
                 console.log(response);
             }.bind(this),
             error: function(xhr,status,error){
+                $("html, body").animate({ scrollTop: 0 }, "slow");
                 PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
             }
        });
