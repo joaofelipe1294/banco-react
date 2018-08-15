@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import connection.ConnectionFactory;
 import dao.ClienteDAO;
+import excecoes.ValorDuplicadoException;
 import models.Cliente;
 
 @Path("cliente")
@@ -41,9 +42,7 @@ public class ClienteWS {
 					.ok(new Gson().toJson(listaClientes))
 					.build();
 		} catch (Exception e) {
-			return Response
-					.serverError()
-					.build();
+			throw new ValorDuplicadoException(e.getMessage());
 		}
 	}
 

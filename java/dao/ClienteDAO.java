@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,11 @@ public class ClienteDAO {
 			statement.setString(4, cliente.getCpf());
 			statement.setDouble(5, cliente.getSalario());
 			statement.execute();
+		}catch(SQLIntegrityConstraintViolationException exc) {
+			if(exc.getMessage().contains("cpf"))
+				throw new RuntimeException("CPF duplicado");
+			else if(exc.getMessage().contains("rg"))
+				throw new RuntimeException("RG duplicado");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
