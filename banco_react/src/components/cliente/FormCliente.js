@@ -142,3 +142,36 @@ export class ListaCliente extends Component{
     }
 
 }
+
+export default class ClienteBox extends Component{
+    constructor(){
+        super();
+        this.state = {error_message: null}
+    }
+    
+    render(){
+        var error_element = '';
+        if(this.state.error_message === 'null'){
+            error_element = '';
+        }else{
+            error_element = (
+                <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                    AQUI SERAO EXIBIDAS MENSAGENS DE ERRO !!!
+                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>);
+        }
+
+        return(
+            <div>
+                {error_element}
+                <FormCliente/>
+                <ListaCliente/>
+            </div>
+        );
+
+    }
+
+
+}
