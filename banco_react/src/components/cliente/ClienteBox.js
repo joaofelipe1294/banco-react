@@ -3,7 +3,8 @@ import FormGroupGenerico from "../genericos/FormGroupGenerico";
 import Cliente from '../../models/Cliente';
 import $ from 'jquery';
 import PubSub from 'pubsub-js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ListaCliente from './ListaCliente';
 
 export class FormCliente extends Component{
     constructor (){
@@ -77,6 +78,7 @@ export class FormCliente extends Component{
     }
 }
 
+/*
 export class ListaCliente extends Component{
 
     constructor(){
@@ -160,6 +162,7 @@ export class ListaCliente extends Component{
     }
 
 }
+*/
 
 export default class ClienteBox extends Component{
     constructor(){
