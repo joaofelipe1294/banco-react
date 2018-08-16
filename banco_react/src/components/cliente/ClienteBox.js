@@ -118,19 +118,17 @@ export class ListaCliente extends Component{
                                     <td>{cliente.cpf}</td>
                                     <td>{cliente.salario}</td>
                                     <td>
-                                        <button className = "btn btn-warning">
+                                        <button id = {'cliente_' + cliente.clienteId} className = "btn btn-warning" data = {JSON.stringify(cliente)} onClick = {this.preparaClienteParaEdicao}>
                                             <FontAwesomeIcon icon="edit" className = "text-white" />
                                         </button>
-
                                     </td>
                                 </tr>
                             );
-                        })}
+                        }.bind(this))}
                     </tbody>
                 </table>
             </div>
         );    
-        
     }
 
     componentDidMount(){
@@ -149,9 +147,19 @@ export class ListaCliente extends Component{
             this.setState({listaClientes: novaListaClientes});
         }.bind(this));
     }
+
+    preparaClienteParaEdicao(evento){
+        evento.preventDefault();
+        let elementoClicado = evento.target;
+        if(elementoClicado.tagName === 'svg')
+            elementoClicado = evento.target.parentNode;
+        else if(elementoClicado.tagName === 'path')
+            elementoClicado = evento.target.parentNode.parentNode;
+        let cliente = $('#' + elementoClicado.getAttribute('id')).attr('data');
+
+    }
+
 }
-
-
 
 export default class ClienteBox extends Component{
     constructor(){
@@ -187,6 +195,4 @@ export default class ClienteBox extends Component{
             </div>
         );
     }
-
-
 }
