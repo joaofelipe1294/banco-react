@@ -79,7 +79,33 @@ export default class FormEditaCliente extends Component{
         PubSub.publish('troca-painel-edicao-por-cadastro', {
             formCadastroClienteRenderizado: !true,
             formEditaClienteRenderizado: !false
-        })
+        });
     }
 
+    enviaFormCadastro (evento){
+        evento.preventDefault();
+        let cliente = new Cliente();
+        cliente.nome = this.state.nome;
+        cliente.sobrenome = this.state.sobrenome;
+        cliente.rg = this.state.rg;
+        cliente.cpf = this.state.cpf;
+        cliente.salario = parseFloat(this.state.salario.replace(',', '.'));
+        $.ajax({
+            url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente',
+            type: 'PUT',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(cliente),
+            success: function(response){
+                this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
+                PubSub.publish('mensagem-erro-cadastro-cliente', null);
+                PubSub.publish('edicao-efetivada-cliente', response);
+                this.fechaPainelEdicao();
+            }.bind(this),
+            error: function(xhr,status,error){
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
+            }
+       });
+    }
 }
