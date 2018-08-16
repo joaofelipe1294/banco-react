@@ -3,6 +3,7 @@ import $ from 'jquery';
 import PubSub from 'pubsub-js';
 import Cliente from '../../models/Cliente';
 import FormGroupGenerico from '../genericos/FormGroupGenerico';
+import { Server_IP } from '../../../src/constantes';
 
 
 export default class FormCliente extends Component{
@@ -58,7 +59,7 @@ export default class FormCliente extends Component{
         cliente.cpf = this.state.cpf;
         cliente.salario = parseFloat(this.state.salario.replace(',', '.'));
         $.ajax({
-            url: 'http://10.0.1.32:8080/api_gerenciador_de_contas/webresources/cliente',
+            url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente',
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',

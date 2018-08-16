@@ -1,0 +1,1 @@
+export var Server_IP = '10.0.1.32';

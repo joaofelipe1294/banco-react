@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import PubSub from 'pubsub-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Server_IP } from '../../../src/constantes';
 
 
 export default class ListaCliente extends Component{
@@ -60,7 +61,7 @@ export default class ListaCliente extends Component{
 
     componentDidMount(){
         $.ajax({
-            url: 'http://10.0.1.32:8080/api_gerenciador_de_contas/webresources/cliente',
+            url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente',
             type: 'GET',
             dataType: 'json',
             success: function(listaAtualizada){
