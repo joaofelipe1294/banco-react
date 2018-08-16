@@ -4,6 +4,7 @@ import PubSub from 'pubsub-js';
 import Cliente from '../../models/Cliente';
 import FormGroupGenerico from '../genericos/FormGroupGenerico';
 import { Server_IP } from '../../constantes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 export default class FormEditaCliente extends Component{
@@ -19,7 +20,16 @@ export default class FormEditaCliente extends Component{
             <div className = "col-md-9 mt-4 mx-auto">
                 <div className="card">
                     <div className="card-header text-center bg-warning">
-                        <h1 className = "text-white">Edição de cliente</h1>
+                        <div className = "d-flex">
+                            <div className = "p-2">
+                                <h1 className = "text-white">Edição de cliente</h1>
+                            </div>
+                            <div className = "ml-auto p-2d">
+                                <button className = "btn btn-dark">
+                                    <FontAwesomeIcon icon="times"/>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div className="card-body">
                         <form type = "POST" onSubmit = {this.enviaFormCadastro}>
@@ -51,7 +61,7 @@ export default class FormEditaCliente extends Component{
         this.setState(campoSendoAlterado);           
     }
 
-    componentDidMount(){
+    componentWillMount(){
         PubSub.subscribe('prepara-edicao-de-cliente', function(channel, cliente){
             this.setState({
                 nome: cliente.nome,
