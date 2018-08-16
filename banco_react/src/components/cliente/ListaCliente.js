@@ -19,19 +19,19 @@ export default class ListaCliente extends Component{
                 <table className = "table table-striped">
                     <thead className = "thead-dark">
                         <tr>
-                            <th>
+                            <th className = "d-none d-md-block">
                                 <h3>Nome</h3>
                             </th>
                             <th>
                                 <h3>Sobrenome</h3>
                             </th>
-                            <th>
+                            <th className = "d-none d-md-block">
                                 <h3>RG</h3>
                             </th>
                             <th>
                                 <h3>CPF</h3>
                             </th>
-                            <th>
+                            <th className = "d-none d-md-block">
                                 <h3>Salário</h3>
                             </th>
                             <th></th>
@@ -41,11 +41,11 @@ export default class ListaCliente extends Component{
                         {this.state.listaClientes.map(function(cliente) {
                             return(
                                 <tr key = {cliente.clienteId}>
-                                    <td>{cliente.nome}</td>
+                                    <td className = "d-none d-md-block">{cliente.nome}</td>
                                     <td>{cliente.sobrenome}</td>
-                                    <td>{cliente.rg}</td>
+                                    <td className = "d-none d-md-block">{cliente.rg}</td>
                                     <td>{cliente.cpf}</td>
-                                    <td>{cliente.salario}</td>
+                                    <td className = "d-none d-md-block">{cliente.salario}</td>
                                     <td>
                                         <button id = {'cliente_' + cliente.clienteId} className = "btn btn-warning" data = {JSON.stringify(cliente)} onClick = {this.preparaClienteParaEdicao}>
                                             <FontAwesomeIcon icon="edit" className = "text-white" />
