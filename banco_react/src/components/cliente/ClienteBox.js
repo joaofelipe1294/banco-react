@@ -10,8 +10,8 @@ export default class ClienteBox extends Component{
         super();
         this.state = {
             mensagemDeErro: null, 
-            formCadastroClienteRenderizado: !false,
-            formEditaClienteRenderizado: !true,
+            formCadastroClienteRenderizado: !true,
+            formEditaClienteRenderizado: !false,
         };
     }
 
@@ -24,6 +24,12 @@ export default class ClienteBox extends Component{
                 formCadastroClienteRenderizado: objetoJson.formCadastroClienteRenderizado,
                 formEditaClienteRenderizado: objetoJson.formEditaClienteRenderizado,
             });
+        }.bind(this));
+        PubSub.subscribe('prepara-edicao-de-cliente', function(channel, {}){
+            this.setState({
+                formCadastroClienteRenderizado: !false,
+                formEditaClienteRenderizado: !true,
+            })
         }.bind(this));
     }
     

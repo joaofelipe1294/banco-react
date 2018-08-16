@@ -74,6 +74,5 @@ export default class FormCadastroCliente extends Component{
                 PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
             }
        });
-       
     }
 }
