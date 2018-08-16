@@ -67,6 +67,7 @@ public class ClienteWS {
 		try (Connection connection = new ConnectionFactory().getConnection()){
 			ClienteDAO clienteDAO = new ClienteDAO(connection);
 			clienteDAO.edita(cliente);
+			connection.commit();
 			List<Cliente> listaClientes = clienteDAO.lista();
 			return Response
 					.ok(new Gson().toJson(listaClientes))

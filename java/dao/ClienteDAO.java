@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class ClienteDAO {
 		this.connection = connection;
 	}
  
-	public void cadastra(Cliente cliente) {
+	public void cadastra(Cliente cliente) throws SQLException {
 		String sql = "insert into clientes (nome, sobrenome, rg, cpf, salario) values (?, ?, ?, ?, ?);";
 		try (PreparedStatement statement = this.connection.prepareStatement(sql)){
 			statement.setString(1, cliente.getNome());
@@ -26,11 +27,13 @@ public class ClienteDAO {
 			statement.setDouble(5, cliente.getSalario());
 			statement.execute();
 		}catch(SQLIntegrityConstraintViolationException exc) {
+			this.connection.rollback();
 			if(exc.getMessage().contains("cpf"))
 				throw new RuntimeException("CPF duplicado");
 			else if(exc.getMessage().contains("rg"))
 				throw new RuntimeException("RG duplicado");
 		} catch (Exception e) {
+			this.connection.rollback();
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
@@ -62,7 +65,7 @@ public class ClienteDAO {
 		}
 	}
 	
-	public void edita(Cliente cliente) {
+	public void edita(Cliente cliente) throws SQLException {
 		String sql = "UPDATE clientes SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, salario = ? WHERE cliente_id = ?";
 		try (PreparedStatement statement = this.connection.prepareStatement(sql)){
 			statement.setString(1, cliente.getNome());
@@ -73,6 +76,7 @@ public class ClienteDAO {
 			statement.setLong(6, cliente.getClienteId());
 			statement.execute();
 		} catch (Exception e) {
+			this.connection.rollback();
 			e.printStackTrace();
 			throw new RuntimeException();
 		}

@@ -91,7 +91,7 @@ public class ClienteDAOTest {
 	}
 	
 	@Test
-	public void testa_listagem_de_clientes() {
+	public void testa_listagem_de_clientes() throws SQLException {
 		Cliente cliente = new Cliente();
 		cliente.setNome("Jon");
 		cliente.setSobrenome("Doe");
@@ -103,7 +103,7 @@ public class ClienteDAOTest {
 	}
 	
 	@Test
-	public void testa_edicao_de_cliente() {
+	public void testa_edicao_de_cliente() throws SQLException {
 		Cliente cliente = new Cliente();
 		cliente.setNome("Jon");
 		cliente.setSobrenome("Doe");
