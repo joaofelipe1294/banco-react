@@ -17,7 +17,7 @@ export default class FormEditaCliente extends Component{
 
     render(){
         return(
-            <div className = "col-md-9 mt-4 mx-auto">
+            <div className = "col-md-9 mt-4 mx-auto" hidden = {this.props.renderizado}>
                 <div className="card">
                     <div className="card-header text-center bg-warning">
                         <div className = "d-flex">
@@ -25,7 +25,7 @@ export default class FormEditaCliente extends Component{
                                 <h1 className = "text-white">Edição de cliente</h1>
                             </div>
                             <div className = "ml-auto p-2d">
-                                <button className = "btn btn-dark">
+                                <button className = "btn btn-dark" onClick = {this.fechaPainelEdicao}>
                                     <FontAwesomeIcon icon="times"/>
                                 </button>
                             </div>
@@ -72,6 +72,14 @@ export default class FormEditaCliente extends Component{
             });
             $("html, body").animate({ scrollTop: 0 }, "slow");
         }.bind(this));
+    }
+
+    fechaPainelEdicao(evento){
+        evento.preventDefault();
+        PubSub.publish('troca-painel-edicao-por-cadastro', {
+            formCadastroClienteRenderizado: !true,
+            formEditaClienteRenderizado: !false
+        })
     }
 
 }

@@ -16,7 +16,7 @@ export default class FormCadastroCliente extends Component{
 
     render(){
         return (
-            <div className = "col-md-9 mt-4 mx-auto">
+            <div className = "col-md-9 mt-4 mx-auto" hidden = {this.props.renderizado}>
                 <div className="card">
                     <div className="card-header text-center bg-primary">
                         <h1 className = "text-white">Cadastro de cliente</h1>

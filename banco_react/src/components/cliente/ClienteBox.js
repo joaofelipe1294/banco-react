@@ -8,12 +8,22 @@ import FormEditaCliente from './FormEditaCliente';
 export default class ClienteBox extends Component{
     constructor(){
         super();
-        this.state = {mensagemDeErro: null};
+        this.state = {
+            mensagemDeErro: null, 
+            formCadastroClienteRenderizado: !false,
+            formEditaClienteRenderizado: !true,
+        };
     }
 
     componentDidMount(){
         PubSub.subscribe('mensagem-erro-cadastro-cliente', function(channel, error){
             this.setState({mensagemDeErro: error});
+        }.bind(this));
+        PubSub.subscribe('troca-painel-edicao-por-cadastro', function(channel, objetoJson){
+            this.setState({
+                formCadastroClienteRenderizado: objetoJson.formCadastroClienteRenderizado,
+                formEditaClienteRenderizado: objetoJson.formEditaClienteRenderizado,
+            });
         }.bind(this));
     }
     
@@ -34,8 +44,8 @@ export default class ClienteBox extends Component{
         return(
             <div>
                 {error_element}
-                {/*<FormCadastroCliente/>*/}
-                <FormEditaCliente/>
+                <FormCadastroCliente renderizado = {this.state.formCadastroClienteRenderizado}/>
+                <FormEditaCliente renderizado = {this.state.formEditaClienteRenderizado}/>
                 <ListaCliente/>
             </div>
         );
