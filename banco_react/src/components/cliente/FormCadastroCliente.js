@@ -3,10 +3,10 @@ import $ from 'jquery';
 import PubSub from 'pubsub-js';
 import Cliente from '../../models/Cliente';
 import FormGroupGenerico from '../genericos/FormGroupGenerico';
-import { Server_IP } from '../../../src/constantes';
+import { Server_IP } from '../../constantes';
 
 
-export default class FormCliente extends Component{
+export default class FormCadastroCliente extends Component{
     constructor (){
         super();
         this.state = {nome: '', sobrenome: '', rg: '', cpf: '', salario: ''};

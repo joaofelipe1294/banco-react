@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import ListaCliente from './ListaCliente';
-import FormCliente from './FormCliente';
+import FormCadastroCliente from './FormCadastroCliente';
 
 
 export default class ClienteBox extends Component{
@@ -33,7 +33,7 @@ export default class ClienteBox extends Component{
         return(
             <div>
                 {error_element}
-                <FormCliente/>
+                <FormCadastroCliente/>
                 <ListaCliente/>
             </div>
         );
