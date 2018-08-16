@@ -102,5 +102,20 @@ public class ClienteDAOTest {
 		assertEquals(1, dao.lista().size());
 	}
 	
+	@Test
+	public void testa_edicao_de_cliente() {
+		Cliente cliente = new Cliente();
+		cliente.setNome("Jon");
+		cliente.setSobrenome("Doe");
+		cliente.setRg("009900");
+		cliente.setCpf("828292825");
+		cliente.setSalario(4900.0);
+		dao.cadastra(cliente);
+		cliente = dao.lista().get(0);
+		cliente.setNome("Not Jon Doe");
+		dao.edita(cliente);
+		assertEquals(cliente.getNome(), dao.lista().get(0).getNome());
+	}
+	
 
 }

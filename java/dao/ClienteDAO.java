@@ -62,4 +62,20 @@ public class ClienteDAO {
 		}
 	}
 	
+	public void edita(Cliente cliente) {
+		String sql = "UPDATE clientes SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, salario = ? WHERE cliente_id = ?";
+		try (PreparedStatement statement = this.connection.prepareStatement(sql)){
+			statement.setString(1, cliente.getNome());
+			statement.setString(2, cliente.getSobrenome());
+			statement.setString(3, cliente.getRg());
+			statement.setString(4, cliente.getCpf());
+			statement.setDouble(5, cliente.getSalario());
+			statement.setLong(6, cliente.getClienteId());
+			statement.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
+	
 }
