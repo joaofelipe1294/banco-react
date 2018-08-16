@@ -6,20 +6,20 @@ import FormGroupGenerico from '../genericos/FormGroupGenerico';
 import { Server_IP } from '../../constantes';
 
 
-export default class FormCadastroCliente extends Component{
-    constructor (){
+export default class FormEditaCliente extends Component{
+
+    constructor(){
         super();
-        this.state = {nome: '', sobrenome: '', rg: '', cpf: '', salario: ''};
-        this.enviaFormCadastro = this.enviaFormCadastro.bind(this);
         this.setValue = this.setValue.bind(this);
+        this.state = {nome: '', sobrenome: '', rg: '', cpf: '', salario: ''};
     }
 
     render(){
-        return (
+        return(
             <div className = "col-md-9 mt-4 mx-auto">
                 <div className="card">
-                    <div className="card-header text-center bg-primary">
-                        <h1 className = "text-white">Cadastro de cliente</h1>
+                    <div className="card-header text-center bg-warning">
+                        <h1 className = "text-white">Edição de cliente</h1>
                     </div>
                     <div className="card-body">
                         <form type = "POST" onSubmit = {this.enviaFormCadastro}>
@@ -35,12 +35,13 @@ export default class FormCadastroCliente extends Component{
                                 </div>
                             </div>
                             <div className = "form-group">
-                                <button className = "btn btn-primary">Cadastrar</button>
+                                <button className = "btn btn-warning text-white">Editar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+
         );
     }
 
@@ -50,30 +51,17 @@ export default class FormCadastroCliente extends Component{
         this.setState(campoSendoAlterado);           
     }
 
-    enviaFormCadastro (evento){
-        evento.preventDefault();
-        let cliente = new Cliente();
-        cliente.nome = this.state.nome;
-        cliente.sobrenome = this.state.sobrenome;
-        cliente.rg = this.state.rg;
-        cliente.cpf = this.state.cpf;
-        cliente.salario = parseFloat(this.state.salario.replace(',', '.'));
-        $.ajax({
-            url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente',
-            type: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify(cliente),
-            success: function(response){
-                this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
-                PubSub.publish('mensagem-erro-cadastro-cliente', null);
-                PubSub.publish('cadastro-efetivado-cliente', response);
-            }.bind(this),
-            error: function(xhr,status,error){
-                $("html, body").animate({ scrollTop: 0 }, "slow");
-                PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
-            }
-       });
-       
+    componentDidMount(){
+        PubSub.subscribe('prepara-edicao-de-cliente', function(channel, cliente){
+            this.setState({
+                nome: cliente.nome,
+                sobrenome: cliente.sobrenome,
+                rg: cliente.rg,
+                cpf: cliente.cpf,
+                salario: cliente.salario
+            });
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+        }.bind(this));
     }
+
 }

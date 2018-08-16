@@ -3,6 +3,7 @@ import $ from 'jquery';
 import PubSub from 'pubsub-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Server_IP } from '../../../src/constantes';
+import Cliente from '../../models/Cliente';
 
 
 export default class ListaCliente extends Component{
@@ -84,7 +85,9 @@ export default class ListaCliente extends Component{
         else if(elementoClicado.tagName === 'path')
             elementoClicado = evento.target.parentNode.parentNode;
         let cliente = $('#' + elementoClicado.getAttribute('id')).attr('data');
-        console.log(cliente)
+        let clienteJson = JSON.parse(cliente);
+        clienteJson = Object.assign(new Cliente(), clienteJson);
+        PubSub.publish('prepara-edicao-de-cliente', clienteJson);
     }
 
 }
