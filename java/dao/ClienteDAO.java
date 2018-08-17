@@ -75,10 +75,16 @@ public class ClienteDAO {
 			statement.setDouble(5, cliente.getSalario());
 			statement.setLong(6, cliente.getClienteId());
 			statement.execute();
+		}catch(SQLIntegrityConstraintViolationException exc) {
+			this.connection.rollback();
+			if(exc.getMessage().contains("cpf"))
+				throw new RuntimeException("CPF duplicado");
+			else if(exc.getMessage().contains("rg"))
+				throw new RuntimeException("RG duplicado");
 		} catch (Exception e) {
 			this.connection.rollback();
 			e.printStackTrace();
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	

@@ -5,7 +5,6 @@ import Cliente from '../../models/Cliente';
 import FormGroupGenerico from '../genericos/FormGroupGenerico';
 import { Server_IP } from '../../constantes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { stat } from 'fs';
 
 
 export default class FormEditaCliente extends Component{
@@ -77,8 +76,7 @@ export default class FormEditaCliente extends Component{
         }.bind(this));
     }
 
-    fechaPainelEdicao(evento){
-        evento.preventDefault();
+    fechaPainelEdicao(){
         PubSub.publish('troca-painel-edicao-por-cadastro', {
             formCadastroClienteRenderizado: !true,
             formEditaClienteRenderizado: !false
@@ -94,7 +92,6 @@ export default class FormEditaCliente extends Component{
         cliente.rg = this.state.rg;
         cliente.cpf = this.state.cpf;
         cliente.salario = parseFloat(String(this.state.salario).replace(',', '.'));
-        console.log(cliente)
         $.ajax({
             url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente',
             type: 'PUT',
@@ -103,18 +100,13 @@ export default class FormEditaCliente extends Component{
             data: JSON.stringify(cliente),
             success: function(response){
                 this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
-                //PubSub.publish('mensagem-erro-cadastro-cliente', null);
+                PubSub.publish('mensagem-erro-cadastro-cliente', null);
                 PubSub.publish('edicao-efetivada-cliente', response);
-                //this.fechaPainelEdicao();
-                //console.log(response)
+                this.fechaPainelEdicao();
             }.bind(this),
             error: function(xhr,status,error){
                 $("html, body").animate({ scrollTop: 0 }, "slow");
                 PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
-                //console.log('ERROOOO')
-                //console.log(error)
-                //console.log(status)
-                //console.log(xhr)
             }
        });
     }

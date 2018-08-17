@@ -73,9 +73,7 @@ public class ClienteWS {
 					.ok(new Gson().toJson(listaClientes))
 					.build();
 		} catch (Exception e) {
-			return Response
-					.serverError()
-					.build();
+			throw new ValorDuplicadoException(e.getMessage());
 		}
 	}
 	
