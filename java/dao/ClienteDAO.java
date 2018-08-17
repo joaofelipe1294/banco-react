@@ -28,10 +28,7 @@ public class ClienteDAO {
 			statement.execute();
 		}catch(SQLIntegrityConstraintViolationException exc) {
 			this.connection.rollback();
-			if(exc.getMessage().contains("cpf"))
-				throw new RuntimeException("CPF duplicado");
-			else if(exc.getMessage().contains("rg"))
-				throw new RuntimeException("RG duplicado");
+			verificaRGeCPFDuplicado(exc);
 		} catch (Exception e) {
 			this.connection.rollback();
 			e.printStackTrace();
@@ -77,15 +74,19 @@ public class ClienteDAO {
 			statement.execute();
 		}catch(SQLIntegrityConstraintViolationException exc) {
 			this.connection.rollback();
-			if(exc.getMessage().contains("cpf"))
-				throw new RuntimeException("CPF duplicado");
-			else if(exc.getMessage().contains("rg"))
-				throw new RuntimeException("RG duplicado");
+			verificaRGeCPFDuplicado(exc);
 		} catch (Exception e) {
 			this.connection.rollback();
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
+	}
+
+	private void verificaRGeCPFDuplicado(SQLIntegrityConstraintViolationException exc) {
+		if(exc.getMessage().contains("cpf"))
+			throw new RuntimeException("CPF duplicado");
+		else if(exc.getMessage().contains("rg"))
+			throw new RuntimeException("RG duplicado");
 	}
 	
 }
