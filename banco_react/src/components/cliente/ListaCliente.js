@@ -19,10 +19,10 @@ export default class ListaCliente extends Component{
                 <table className = "table table-striped">
                     <thead className = "thead-dark">
                         <tr>
-                            <th className = "d-none d-md-block">
+                            <th className = "d-none d-md-block" id = "colunaNome">
                                 <h3>Nome</h3>
                             </th>
-                            <th>
+                            <th id = "colunaSobrenome">
                                 <h3>Sobrenome</h3>
                             </th>
                             <th className = "d-none d-md-block">
@@ -31,7 +31,7 @@ export default class ListaCliente extends Component{
                             <th>
                                 <h3>CPF</h3>
                             </th>
-                            <th className = "d-none d-md-block">
+                            <th className = "d-none d-md-block" id = "colunaSalario">
                                 <h3>Salário</h3>
                             </th>
                             <th></th>
@@ -78,6 +78,15 @@ export default class ListaCliente extends Component{
         PubSub.subscribe('edicao-efetivada-cliente', function(channel, novaListaClientes){
             this.setState({listaClientes: novaListaClientes});
         }.bind(this));
+        $('#colunaNome').click(function(){
+            this.buscaListaOrdenada('nome');
+        }.bind(this));
+        $('#colunaSobrenome').click(function(){
+            this.buscaListaOrdenada('sobrenome');
+        }.bind(this));
+        $('#colunaSalario').click(function(){
+            this.buscaListaOrdenada('salario');
+        }.bind(this));
     }
 
     preparaClienteParaEdicao(evento){
@@ -93,4 +102,17 @@ export default class ListaCliente extends Component{
         PubSub.publish('prepara-edicao-de-cliente', clienteJson);
     }
 
+    buscaListaOrdenada(criterio){
+        $.ajax({
+            url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente/' + criterio,
+            type: 'GET',
+            dataType: 'json',
+            success: function(listaAtualizada){
+                this.setState({listaClientes: listaAtualizada});         
+            }.bind(this),
+            error: function(xhr,status,error){
+                alert('Não foi possível listar os clientes listados.');
+            }
+        });
+    }
 }
