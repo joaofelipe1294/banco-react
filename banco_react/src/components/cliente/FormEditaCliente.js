@@ -5,6 +5,7 @@ import Cliente from '../../models/Cliente';
 import FormGroupGenerico from '../genericos/FormGroupGenerico';
 import { Server_IP } from '../../constantes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { stat } from 'fs';
 
 
 export default class FormEditaCliente extends Component{
@@ -12,7 +13,8 @@ export default class FormEditaCliente extends Component{
     constructor(){
         super();
         this.setValue = this.setValue.bind(this);
-        this.state = {nome: '', sobrenome: '', rg: '', cpf: '', salario: ''};
+        this.enviaFormEdicao = this.enviaFormEdicao.bind(this);
+        this.state = {nome: '', sobrenome: '', rg: '', cpf: '', salario: '', clienteId: ''};
     }
 
     render(){
@@ -32,7 +34,7 @@ export default class FormEditaCliente extends Component{
                         </div>
                     </div>
                     <div className="card-body">
-                        <form type = "POST" onSubmit = {this.enviaFormCadastro}>
+                        <form type = "POST" onSubmit = {this.enviaFormEdicao}>
                             <div className = "row">
                                 <div className = "col-md-6">
                                     <FormGroupGenerico label = "Nome" name = "nome" id = "nome" value = {this.state.nome}  onChange = {this.setValue.bind(this, 'nome')} required = "true"/>
@@ -68,7 +70,8 @@ export default class FormEditaCliente extends Component{
                 sobrenome: cliente.sobrenome,
                 rg: cliente.rg,
                 cpf: cliente.cpf,
-                salario: cliente.salario
+                salario: cliente.salario,
+                clienteId: cliente.clienteId
             });
             $("html, body").animate({ scrollTop: 0 }, "slow");
         }.bind(this));
@@ -82,29 +85,36 @@ export default class FormEditaCliente extends Component{
         });
     }
 
-    enviaFormCadastro (evento){
+    enviaFormEdicao (evento){
         evento.preventDefault();
         let cliente = new Cliente();
+        cliente.clienteId = this.state.clienteId;
         cliente.nome = this.state.nome;
         cliente.sobrenome = this.state.sobrenome;
         cliente.rg = this.state.rg;
         cliente.cpf = this.state.cpf;
-        cliente.salario = parseFloat(this.state.salario.replace(',', '.'));
+        cliente.salario = parseFloat(String(this.state.salario).replace(',', '.'));
+        console.log(cliente)
         $.ajax({
             url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente',
             type: 'PUT',
             contentType: 'application/json',
-            dataType: 'json',
+            //dataType: 'json',
             data: JSON.stringify(cliente),
             success: function(response){
-                this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
-                PubSub.publish('mensagem-erro-cadastro-cliente', null);
-                PubSub.publish('edicao-efetivada-cliente', response);
-                this.fechaPainelEdicao();
+                //this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
+                //PubSub.publish('mensagem-erro-cadastro-cliente', null);
+                //PubSub.publish('edicao-efetivada-cliente', response);
+                //this.fechaPainelEdicao();
+                console.log(response)
             }.bind(this),
             error: function(xhr,status,error){
-                $("html, body").animate({ scrollTop: 0 }, "slow");
-                PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
+                //$("html, body").animate({ scrollTop: 0 }, "slow");
+                //PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
+                console.log('ERROOOO')
+                console.log(error)
+                console.log(status)
+                console.log(xhr)
             }
        });
     }
