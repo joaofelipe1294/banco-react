@@ -16,37 +16,37 @@ export default class ListaCliente extends Component{
     render(){
         return (
             <div className = "col-md-11 mt-4 mx-auto">
-                <table className = "table table-striped">
+                <table className = "table table-striped text-center">
                     <thead className = "thead-dark">
-                        <tr>
-                            <th className = "d-none d-md-block" id = "colunaNome">
+                        <tr className = "d-flex">
+                            <th className = "d-none d-md-block col-md-2" id = "colunaNome">
                                 <h3>Nome</h3>
                             </th>
-                            <th id = "colunaSobrenome">
+                            <th id = "colunaSobrenome" className = "col-md-3">
                                 <h3>Sobrenome</h3>
                             </th>
-                            <th className = "d-none d-md-block">
+                            <th className = "d-none d-md-block col-md-2">
                                 <h3>RG</h3>
                             </th>
-                            <th>
+                            <th className = "col-md-2">
                                 <h3>CPF</h3>
                             </th>
-                            <th className = "d-none d-md-block" id = "colunaSalario">
+                            <th className = "d-none d-md-block col-md-2" id = "colunaSalario">
                                 <h3>Salário</h3>
                             </th>
-                            <th></th>
+                            <th className = "col-md-1"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.listaClientes.map(function(cliente) {
                             return(
-                                <tr key = {cliente.clienteId}>
-                                    <td className = "d-none d-md-block">{cliente.nome}</td>
-                                    <td>{cliente.sobrenome}</td>
-                                    <td className = "d-none d-md-block">{cliente.rg}</td>
-                                    <td>{cliente.cpf}</td>
-                                    <td className = "d-none d-md-block">{cliente.salario}</td>
-                                    <td>
+                                <tr key = {cliente.clienteId} className = "d-flex">
+                                    <td className = "d-none d-md-block col-md-2">{cliente.nome}</td>
+                                    <td className = "col-md-3">{cliente.sobrenome}</td>
+                                    <td className = "d-none d-md-block col-md-2">{cliente.rg}</td>
+                                    <td className = "col-md-2">{cliente.cpf}</td>
+                                    <td className = "d-none d-md-block col-md-2">{cliente.salario}</td>
+                                    <td className = "col-md-1">
                                         <button id = {'cliente_' + cliente.clienteId} className = "btn btn-warning" data = {JSON.stringify(cliente)} onClick = {this.preparaClienteParaEdicao}>
                                             <FontAwesomeIcon icon="edit" className = "text-white" />
                                         </button>
