@@ -55,7 +55,7 @@ public class ClienteDAOTest {
 	}
 	
 	@Test(expected = RuntimeException.class)
-	public void teste_cadastro_invalido_cpf_duplicado() {
+	public void teste_cadastro_invalido_cpf_duplicado() throws SQLException {
 		Cliente cliente1 = new Cliente();
 		cliente1.setNome("Jon");
 		cliente1.setSobrenome("Doe");
@@ -73,7 +73,7 @@ public class ClienteDAOTest {
 	}
 	
 	@Test(expected = RuntimeException.class)
-	public void teste_cadastro_invalido_rg_duplicado() {
+	public void teste_cadastro_invalido_rg_duplicado() throws SQLException {
 		Cliente cliente1 = new Cliente();
 		cliente1.setNome("Jon");
 		cliente1.setSobrenome("Doe");
