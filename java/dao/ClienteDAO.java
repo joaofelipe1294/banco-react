@@ -8,6 +8,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import enums.CampoOrdenacao;
 import models.Cliente;
 
 public class ClienteDAO {
@@ -87,6 +88,41 @@ public class ClienteDAO {
 			throw new RuntimeException("CPF duplicado");
 		else if(exc.getMessage().contains("rg"))
 			throw new RuntimeException("RG duplicado");
+	}
+	
+	public List<Cliente> listaOrdenada(CampoOrdenacao campo) {
+		String sqlNome = "SELECT * FROM clientes ORDER BY nome DESC;";
+		String sqlSobrenome = "SELECT * FROM clientes ORDER BY sobrenome DESC;";
+		String sqlSalario = "SELECT * FROM clientes ORDER BY salario DESC;";
+		String sql;
+		if (campo.equals(CampoOrdenacao.NOME))
+			sql = sqlNome;
+		else if (campo.equals(CampoOrdenacao.SOBORENOME))
+			sql = sqlSobrenome;
+		else
+			sql = sqlSalario;
+		try (PreparedStatement stmt = this.connection.prepareStatement(sql)){
+			try (ResultSet resultSet = stmt.executeQuery()){
+				List<Cliente> listaClientes = new ArrayList<>();
+				while(resultSet.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setClienteId(resultSet.getLong("cliente_id"));
+					cliente.setNome(resultSet.getString("nome"));
+					cliente.setSobrenome(resultSet.getString("sobrenome"));
+					cliente.setCpf(resultSet.getString("cpf"));
+					cliente.setRg(resultSet.getString("rg"));
+					cliente.setSalario(resultSet.getDouble("salario"));
+					listaClientes.add(cliente);
+				}
+				return listaClientes;
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
 	}
 	
 }
