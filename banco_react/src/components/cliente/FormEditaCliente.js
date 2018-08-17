@@ -99,22 +99,22 @@ export default class FormEditaCliente extends Component{
             url: 'http://' + Server_IP + ':8080/api_gerenciador_de_contas/webresources/cliente',
             type: 'PUT',
             contentType: 'application/json',
-            //dataType: 'json',
+            dataType: 'json',
             data: JSON.stringify(cliente),
             success: function(response){
-                //this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
+                this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
                 //PubSub.publish('mensagem-erro-cadastro-cliente', null);
                 //PubSub.publish('edicao-efetivada-cliente', response);
                 //this.fechaPainelEdicao();
                 console.log(response)
             }.bind(this),
             error: function(xhr,status,error){
-                //$("html, body").animate({ scrollTop: 0 }, "slow");
-                //PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
-                console.log('ERROOOO')
-                console.log(error)
-                console.log(status)
-                console.log(xhr)
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
+                //console.log('ERROOOO')
+                //console.log(error)
+                //console.log(status)
+                //console.log(xhr)
             }
        });
     }
