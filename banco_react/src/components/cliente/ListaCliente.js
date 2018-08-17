@@ -75,6 +75,9 @@ export default class ListaCliente extends Component{
         PubSub.subscribe('cadastro-efetivado-cliente', function(channel, novaListaClientes){
             this.setState({listaClientes: novaListaClientes});
         }.bind(this));
+        PubSub.subscribe('edicao-efetivada-cliente', function(channel, novaListaClientes){
+            this.setState({listaClientes: novaListaClientes});
+        }.bind(this));
     }
 
     preparaClienteParaEdicao(evento){

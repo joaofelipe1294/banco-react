@@ -104,9 +104,9 @@ export default class FormEditaCliente extends Component{
             success: function(response){
                 this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
                 //PubSub.publish('mensagem-erro-cadastro-cliente', null);
-                //PubSub.publish('edicao-efetivada-cliente', response);
+                PubSub.publish('edicao-efetivada-cliente', response);
                 //this.fechaPainelEdicao();
-                console.log(response)
+                //console.log(response)
             }.bind(this),
             error: function(xhr,status,error){
                 $("html, body").animate({ scrollTop: 0 }, "slow");
