@@ -38,7 +38,7 @@ public class ClienteDAO {
 	}
 	
 	public List<Cliente> lista() {
-		String sql = "SELECT * FROM clientes";
+		String sql = "SELECT * FROM clientes ORDER BY nome;";
 		try (PreparedStatement stmt = this.connection.prepareStatement(sql)){
 			try (ResultSet resultSet = stmt.executeQuery()){
 				List<Cliente> listaClientes = new ArrayList<>();
