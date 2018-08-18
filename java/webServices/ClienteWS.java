@@ -114,7 +114,23 @@ public class ClienteWS {
 		} catch (Exception e) {
 			return Response.serverError().build();
 		}
-		
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/busca/sobrenome/{sobrenomeCliente}")
+	public Response buscaPorSobrenome(@PathParam("sobrenomeCliente") String sobrenomeCliente) {
+		Cliente clienteBusca = new Cliente();
+		clienteBusca.setSobrenome(sobrenomeCliente);
+		try (Connection connection = new ConnectionFactory().getConnection()){
+			ClienteDAO clienteDAO = new ClienteDAO(connection);
+			List<Cliente> listaCliente = clienteDAO.buscaPorParteSobrenome(clienteBusca);
+			return Response
+					.ok(new Gson().toJson(listaCliente))
+					.build();
+		} catch (Exception e) {
+			return Response.serverError().build();
+		}
 	}
 	
 }
