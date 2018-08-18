@@ -21,8 +21,19 @@ class App extends Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  <Link className="nav-link" to={'/cliente'}>Cliente</Link>
+                  
                 </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cliente
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <Link className="dropdown-item" to={'/cliente'}>Novo</Link>
+                  <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Cadastrados</a>
+                  </div>
+                </li>
+                
                 <li className="nav-item">
                   <a className="nav-link" href="#">Conta</a>
                 </li>
