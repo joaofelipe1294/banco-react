@@ -84,10 +84,7 @@ export default class FormEditaCliente extends Component{
     }
 
     fechaPainelEdicao(){
-        PubSub.publish('troca-painel-edicao-por-cadastro', {
-            formCadastroClienteRenderizado: !true,
-            formEditaClienteRenderizado: !false
-        });
+        PubSub.publish('fecha-form-edicao-cliente', {});
     }
 
     enviaFormEdicao (evento){
