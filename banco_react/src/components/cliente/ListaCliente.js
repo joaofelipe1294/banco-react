@@ -55,7 +55,6 @@ export default class ListaCliente extends Component{
                             );
                         }.bind(this))}
                     </tbody>
-                    COLOCAR NO RODAPE DA TABELA !!!
                 </table>
             </div>
         );    
