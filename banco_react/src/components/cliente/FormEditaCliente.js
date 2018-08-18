@@ -70,7 +70,7 @@ export default class FormEditaCliente extends Component{
     }
 
     componentWillMount(){
-        PubSub.subscribe('prepara-edicao-de-cliente', function(channel, cliente){
+        PubSub.subscribe('prepara-edicao-cliente', function(channel, cliente){
             this.setState({
                 nome: cliente.nome,
                 sobrenome: cliente.sobrenome,

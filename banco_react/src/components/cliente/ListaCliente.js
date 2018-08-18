@@ -99,7 +99,7 @@ export default class ListaCliente extends Component{
         let cliente = $('#' + elementoClicado.getAttribute('id')).attr('data');
         let clienteJson = JSON.parse(cliente);
         clienteJson = Object.assign(new Cliente(), clienteJson);
-        PubSub.publish('prepara-edicao-de-cliente', clienteJson);
+        PubSub.publish('prepara-edicao-cliente', clienteJson);
     }
 
     buscaListaOrdenada(criterio){

@@ -10,7 +10,7 @@ export default class GerenciamentoClienteBox extends Component{
     constructor(){
         super();
         this.state = {
-            renderizaFormEditaCliente: !true,
+            renderizaFormEditaCliente: !false,
         };
     }
 
@@ -27,6 +27,9 @@ export default class GerenciamentoClienteBox extends Component{
     componentDidMount(){
         PubSub.subscribe('fecha-form-edicao-cliente', function(channel){
             this.setState({renderizaFormEditaCliente: !false});
+        }.bind(this));
+        PubSub.subscribe('prepara-edicao-cliente', function(channel, clienteJson){
+            this.setState({renderizaFormEditaCliente: !true})
         }.bind(this));
     }
 
