@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-//import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ClienteBox from './components/cliente/ClienteBox';
-//import { Router, Route, Link } from 'react-router';
 import {BrowserRouter as Router, Route,Switch,Link} from 'react-router-dom';
 import Home from './components/home';
+import FormCadastroCliente from './components/cliente/FormCadastroCliente';
 
 
 ReactDOM.render(
@@ -15,7 +14,8 @@ ReactDOM.render(
             <App>
                 <Switch>            
                     <Route exact path="/" component={Home}/>
-                    <Route path="/cliente" component={ClienteBox}/>
+                    <Route exact path="/cliente" component={ClienteBox}/>
+                    <Route exact path="/cliente/novo" component={FormCadastroCliente}/>
                     {/*<Route path="/livro" component={LivroAdmin}/>*/}               
                 </Switch>            
             </App>

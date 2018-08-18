@@ -48,7 +48,7 @@ class App extends Component {
                     Cliente
                   </a>
                   <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <Link className="dropdown-item" to={'/cliente'}>Novo</Link>
+                    <Link className="dropdown-item" to={'/cliente/novo'}>Novo</Link>
                   <div className="dropdown-divider"></div>
                     <a className="dropdown-item" href="#">Cadastrados</a>
                   </div>
