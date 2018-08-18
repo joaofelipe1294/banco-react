@@ -150,6 +150,16 @@ public class ClienteDAOTest {
 		assertEquals(1, listaClientes.size());
 	}
 
+	@Test
+	public void testa_busca_cliente_por_sobrenome() throws SQLException {
+		dao.cadastra(cliente1);
+		dao.cadastra(cliente2);
+		dao.cadastra(cliente3);
+		Cliente clienteBusca = new Cliente();
+		clienteBusca.setSobrenome("Doe");
+		List<Cliente> listaClientes = dao.buscaPorParteSobrenome(clienteBusca);
+		assertEquals(1, listaClientes.size());
+	}
 }
 
 

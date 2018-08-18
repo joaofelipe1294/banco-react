@@ -152,6 +152,33 @@ public class ClienteDAO {
 		}
 	}
 	
+	public List<Cliente> buscaPorParteSobrenome(Cliente clienteBusca) {
+		String sql = "SELECT * FROM clientes WHERE sobrenome LIKE ?";
+		try (PreparedStatement statement = this.connection.prepareStatement(sql)){
+			statement.setString(1, "%" + clienteBusca.getSobrenome() + "%");
+			try (ResultSet resultSet = statement.executeQuery()){
+				List<Cliente> listaClientes = new ArrayList<>();
+				while(resultSet.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setClienteId(resultSet.getLong("cliente_id"));
+					cliente.setNome(resultSet.getString("nome"));
+					cliente.setSobrenome(resultSet.getString("sobrenome"));
+					cliente.setCpf(resultSet.getString("cpf"));
+					cliente.setRg(resultSet.getString("rg"));
+					cliente.setSalario(resultSet.getDouble("salario"));
+					listaClientes.add(cliente);
+				}
+				return listaClientes;
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
+	
 }
 
 
