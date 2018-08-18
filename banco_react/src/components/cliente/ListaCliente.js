@@ -87,6 +87,9 @@ export default class ListaCliente extends Component{
         $('#colunaSalario').click(function(){
             this.buscaListaOrdenada('salario');
         }.bind(this));
+        PubSub.subscribe('atualizar-lista-cliente', function(channel, listaAtualizada){
+            this.setState({listaClientes: listaAtualizada})
+        }.bind(this));
     }
 
     preparaClienteParaEdicao(evento){

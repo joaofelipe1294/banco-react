@@ -25,7 +25,14 @@ export default class FormCadastroCliente extends Component{
                         <form type = "POST" onSubmit = {this.enviaFormCadastro}>
                             <div className = "row">
                                 <div className = "col-md-6">
-                                    <FormGroupGenerico label = "Nome" name = "nome" id = "nome" value = {this.state.nome}  onChange = {this.setValue.bind(this, 'nome')} required = "true"/>
+                                    <FormGroupGenerico 
+                                        label = "Nome" 
+                                        name = "nome" 
+                                        id = "nome" 
+                                        value = {this.state.nome} 
+                                        onChange = {this.setValue.bind(this, 'nome')} 
+                                        required = "true"
+                                    />
                                     <FormGroupGenerico label = "RG" id = "rg" type = "number" value = {this.state.rg} onChange = {this.setValue.bind(this, 'rg')} required = "true"/>
                                     <FormGroupGenerico label = "Salário" id = "salario" type = "number" step = "0.01" value = {this.state.salario} onChange = {this.setValue.bind(this, 'salario')} required = "true"/>
                                 </div>
