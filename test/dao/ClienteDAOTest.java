@@ -111,9 +111,10 @@ public class ClienteDAOTest {
 		dao.cadastra(cliente2);
 		dao.cadastra(cliente3);
 		List<Cliente> listaClientes = dao.listaOrdenada(CampoOrdenacao.NOME);
-		assertEquals("Brunilda", listaClientes.get(0).getNome());
+		assertEquals("Salomão", listaClientes.get(0).getNome());		
 		assertEquals("Jon", listaClientes.get(1).getNome());
-		assertEquals("Salomão", listaClientes.get(2).getNome());
+		assertEquals("Brunilda", listaClientes.get(2).getNome());
+
 	}
 	
 	@Test
@@ -122,9 +123,9 @@ public class ClienteDAOTest {
 		dao.cadastra(cliente2);
 		dao.cadastra(cliente3);
 		List<Cliente> listaClientes = dao.listaOrdenada(CampoOrdenacao.SOBORENOME);
-		assertEquals("Jon", listaClientes.get(0).getNome());
+		assertEquals("Salomão", listaClientes.get(0).getNome());
 		assertEquals("Brunilda", listaClientes.get(1).getNome());
-		assertEquals("Salomão", listaClientes.get(2).getNome());
+		assertEquals("Jon", listaClientes.get(2).getNome());
 	}
 	
 	@Test
@@ -133,9 +134,33 @@ public class ClienteDAOTest {
 		dao.cadastra(cliente2);
 		dao.cadastra(cliente3);
 		List<Cliente> listaClientes = dao.listaOrdenada(CampoOrdenacao.SALARIO);
-		assertEquals("Salomão", listaClientes.get(0).getNome());
+		assertEquals("Jon", listaClientes.get(0).getNome());
 		assertEquals("Brunilda", listaClientes.get(1).getNome());
-		assertEquals("Jon", listaClientes.get(2).getNome());
+		assertEquals("Salomão", listaClientes.get(2).getNome());
+	}
+	
+	@Test
+	public void testa_busca_cliente_por_nome() throws SQLException {
+		dao.cadastra(cliente1);
+		dao.cadastra(cliente2);
+		dao.cadastra(cliente3);
+		Cliente clienteBusca = new Cliente();
+		clienteBusca.setNome("Jon");
+		List<Cliente> listaClientes = dao.buscaPorParteNome(clienteBusca);
+		assertEquals(1, listaClientes.size());
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
