@@ -21,28 +21,24 @@ class App extends Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  
                 </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Cliente
                   </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link className="dropdown-item" to={'/cliente'}>Novo</Link>
-                  <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Cadastrados</a>
+                  <div className="dropdown-divider"></div>
+                    <a className="dropdown-item" href="#">Cadastrados</a>
                   </div>
                 </li>
-                
                 <li className="nav-item">
                   <a className="nav-link" href="#">Conta</a>
                 </li>
               </ul>
             </div>
           </nav>
-
           {this.props.children}
-
       </div>
     );
   }
