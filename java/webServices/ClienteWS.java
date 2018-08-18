@@ -2,7 +2,6 @@ package webServices;
 
 import java.sql.Connection;
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,9 +13,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import com.google.gson.Gson;
-
 import connection.ConnectionFactory;
 import dao.ClienteDAO;
 import enums.CampoOrdenacao;
@@ -100,6 +97,24 @@ public class ClienteWS {
 		} catch (Exception e) {
 			return Response.serverError().build();
 		}	
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/busca/nome/{nomeCliente}")
+	public Response buscaPorNome(@PathParam("nomeCliente") String nomeCliente) {
+		Cliente clienteBusca = new Cliente();
+		clienteBusca.setNome(nomeCliente);
+		try (Connection connection = new ConnectionFactory().getConnection()){
+			ClienteDAO clienteDAO = new ClienteDAO(connection);
+			List<Cliente> listaCliente = clienteDAO.buscaPorParteNome(clienteBusca);
+			return Response
+					.ok(new Gson().toJson(listaCliente))
+					.build();
+		} catch (Exception e) {
+			return Response.serverError().build();
+		}
+		
 	}
 	
 }
