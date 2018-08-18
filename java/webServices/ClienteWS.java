@@ -136,12 +136,29 @@ public class ClienteWS {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/busca/rg/{rg}")
-	public Response buscaPorrg(@PathParam("rg") String rg) {
+	public Response buscaPorRg(@PathParam("rg") String rg) {
 		Cliente clienteBusca = new Cliente();
 		clienteBusca.setRg(rg);
 		try (Connection connection = new ConnectionFactory().getConnection()){
 			ClienteDAO clienteDAO = new ClienteDAO(connection);
 			Cliente cliente = clienteDAO.buscaClienteRG(clienteBusca);
+			return Response
+					.ok(new Gson().toJson(cliente))
+					.build();
+		} catch (Exception e) {
+			return Response.serverError().build();
+		}
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/busca/cpf/{cpf}")
+	public Response buscaPorCPF(@PathParam("cpf") String cpf) {
+		Cliente clienteBusca = new Cliente();
+		clienteBusca.setCpf(cpf);
+		try (Connection connection = new ConnectionFactory().getConnection()){
+			ClienteDAO clienteDAO = new ClienteDAO(connection);
+			Cliente cliente = clienteDAO.buscaClienteCPF(clienteBusca);
 			return Response
 					.ok(new Gson().toJson(cliente))
 					.build();
