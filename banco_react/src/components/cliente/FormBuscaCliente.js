@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FormGroupPesquisaGenerico from './../genericos/FormGroupPesquisaGenerico';
+import FormGroupBuscaGenerico from './../genericos/FormGroupBuscaGenerico';
 
 
 export default class FormBuscaCliente extends Component{
@@ -12,10 +12,10 @@ export default class FormBuscaCliente extends Component{
                         <h1>Buscar cliente</h1>
                     </div>
                     <div className="card-body">
-                        <FormGroupPesquisaGenerico label= "Busca por Nome." type = "text"/>
-                        <FormGroupPesquisaGenerico label= "Busca por Sobrenome." type = "text"/>
-                        <FormGroupPesquisaGenerico label= "Busca por RG." type = "number"/>
-                        <FormGroupPesquisaGenerico label= "Busca por CPF." type = "number"/>
+                        <FormGroupBuscaGenerico label= "Busca por Nome." type = "text"/>
+                        <FormGroupBuscaGenerico label= "Busca por Sobrenome." type = "text"/>
+                        <FormGroupBuscaGenerico label= "Busca por RG." type = "number"/>
+                        <FormGroupBuscaGenerico label= "Busca por CPF." type = "number"/>
                     </div>
                 </div>
             </div>
