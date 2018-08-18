@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import 'bootstrap'
-import ClienteBox from './components/cliente/ClienteBox';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import {Link} from 'react-router-dom';
+import PubSub from 'pubsub-js';
+
 
 library.add(fas);
 
@@ -16,6 +17,7 @@ class App extends Component {
     super();
     this.state = {
       mensagemDeErro: null,
+      mensagemDeSucesso: null,
     }
   }
 
@@ -27,6 +29,19 @@ class App extends Component {
       error_element = (
         <div className="alert alert-danger alert-dismissible fade show" role="alert">
         {this.state.mensagemDeErro}
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+      );
+    }
+    var success_elememt = '';
+    if(this.state.mensagemDeSucesso === null){
+      success_elememt = '';
+    }else{
+      success_elememt = (
+        <div className="alert alert-success alert-dismissible fade show" role="alert">
+        {this.state.mensagemDeSucesso}
         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
@@ -60,10 +75,27 @@ class App extends Component {
             </div>
           </nav>
           {error_element}
+          {success_elememt}
           {this.props.children}
         </div>
     );
   }
+
+  componentWillMount(){
+    PubSub.subscribe('mensagem-sucesso', function(channel, mensagemJson){
+      this.setState({
+        mensagemDeSucesso: mensagemJson.msg,
+        mensagemDeErro: null
+      });
+    }.bind(this));
+    PubSub.subscribe('mensagem-erro', function(channel, mensagemJson){
+      this.setState({
+        mensagemDeErro: mensagemJson.msg,
+        mensagemDeSucesso: null,
+      });
+    }.bind(this));
+  }
+
 }
 
 export default App;

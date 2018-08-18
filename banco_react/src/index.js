@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import ClienteBox from './components/cliente/ClienteBox';
-import {BrowserRouter as Router, Route,Switch,Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route,Switch} from 'react-router-dom';
 import Home from './components/home';
 import FormCadastroCliente from './components/cliente/FormCadastroCliente';
 

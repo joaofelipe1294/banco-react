@@ -66,12 +66,13 @@ export default class FormCadastroCliente extends Component{
             data: JSON.stringify(cliente),
             success: function(response){
                 this.setState({nome: '', sobrenome: '', rg: '', cpf: '', salario: ''});
-                PubSub.publish('mensagem-erro-cadastro-cliente', null);
-                PubSub.publish('cadastro-efetivado-cliente', response);
+                PubSub.publish('mensagem-erro', {msg: null});
+                PubSub.publish('mensagem-sucesso', {msg: 'Cliente cadastrado com sucesso'});
+                this.props.history.push('/');
             }.bind(this),
             error: function(xhr,status,error){
                 $("html, body").animate({ scrollTop: 0 }, "slow");
-                PubSub.publish('mensagem-erro-cadastro-cliente', xhr.responseText);
+                PubSub.publish('mensagem-erro', {msg: xhr.responseText});
             }
        });
     }
