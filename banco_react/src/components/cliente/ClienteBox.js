@@ -46,7 +46,6 @@ export default class ClienteBox extends Component{
                     </button>
                 </div>);
         }
-
         return(
             <div>
                 {error_element}

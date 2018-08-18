@@ -9,10 +9,32 @@ import {Link} from 'react-router-dom';
 
 library.add(fas);
 
+
 class App extends Component {
+
+  constructor(){
+    super();
+    this.state = {
+      mensagemDeErro: null,
+    }
+  }
+
   render() {
+    var error_element = '';
+    if(this.state.mensagemDeErro === null){
+      error_element = '';
+    }else{
+      error_element = (
+        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+        {this.state.mensagemDeErro}
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+      );
+    }
     return (
-      <div className="App">
+        <div className="App">
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <Link className="navbar-brand" to={'/'}>Banco-React</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,8 +42,7 @@ class App extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                </li>
+                <li className="nav-item active"></li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Cliente
@@ -38,8 +59,9 @@ class App extends Component {
               </ul>
             </div>
           </nav>
+          {error_element}
           {this.props.children}
-      </div>
+        </div>
     );
   }
 }
