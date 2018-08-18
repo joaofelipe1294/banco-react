@@ -11,6 +11,7 @@ export default class GerenciamentoClienteBox extends Component{
         super();
         this.state = {
             renderizaFormEditaCliente: !false,
+            renderizaFormBuscaCliente: !true,
         };
     }
 
@@ -18,7 +19,7 @@ export default class GerenciamentoClienteBox extends Component{
         return (
             <div>
                 <FormEditaCliente renderizado = {this.state.renderizaFormEditaCliente}/>
-                <FormBuscaCliente/>
+                <FormBuscaCliente renderizado = {this.state.renderizaFormBuscaCliente}/>
                 <ListaCliente/>
             </div>
         );
@@ -26,10 +27,16 @@ export default class GerenciamentoClienteBox extends Component{
 
     componentDidMount(){
         PubSub.subscribe('fecha-form-edicao-cliente', function(channel){
-            this.setState({renderizaFormEditaCliente: !false});
+            this.setState({
+                renderizaFormEditaCliente: !false,
+                renderizaFormBuscaCliente: !true,
+            });
         }.bind(this));
         PubSub.subscribe('prepara-edicao-cliente', function(channel, clienteJson){
-            this.setState({renderizaFormEditaCliente: !true})
+            this.setState({
+                renderizaFormEditaCliente: !true,
+                renderizaFormBuscaCliente: !false,
+            });
         }.bind(this));
     }
 
