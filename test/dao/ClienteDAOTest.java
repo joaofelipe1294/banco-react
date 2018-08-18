@@ -162,7 +162,7 @@ public class ClienteDAOTest {
 	}
 	
 	@Test
-	public void testa_busca_cliente_por_cpf() throws SQLException {
+	public void testa_busca_cliente_por_rg() throws SQLException {
 		dao.cadastra(cliente1);
 		Cliente clienteBanco = dao.buscaClienteRG(cliente1);
 		assertEquals(clienteBanco.getNome(), cliente1.getNome());
@@ -173,6 +173,20 @@ public class ClienteDAOTest {
 		Cliente cliente = new Cliente();
 		cliente.setRg("0123");
 		dao.buscaClienteRG(cliente);
+	}
+	
+	@Test
+	public void testa_busca_cliente_por_cpf() throws SQLException {
+		dao.cadastra(cliente1);
+		Cliente clienteBanco = dao.buscaClienteCPF(cliente1);
+		assertEquals(clienteBanco.getNome(), cliente1.getNome());
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void testa_busca_cpf_invalido() throws SQLException {
+		Cliente cliente = new Cliente();
+		cliente.setCpf("0123");
+		dao.buscaClienteCPF(cliente);
 	}
 	
 }
