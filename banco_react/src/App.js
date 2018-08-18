@@ -41,13 +41,8 @@ class App extends Component {
             </div>
           </nav>
 
-          {/* AQUI COMECA CODIGO DO CLIENTE */}
-          
-          {/*<ClienteBox/>*/}
-
           {this.props.children}
 
-        { /* ACABA AQUI A DIV MAIN */}
       </div>
     );
   }
