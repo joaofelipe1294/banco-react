@@ -13,7 +13,14 @@ export default class FormEditaCliente extends Component{
         super();
         this.setValue = this.setValue.bind(this);
         this.enviaFormEdicao = this.enviaFormEdicao.bind(this);
-        this.state = {nome: '', sobrenome: '', rg: '', cpf: '', salario: '', clienteId: ''};
+        this.state = {
+            nome: '', 
+            sobrenome: '', 
+            rg: '', 
+            cpf: '', 
+            salario: '', 
+            clienteId: ''
+        };
     }
 
     render(){
