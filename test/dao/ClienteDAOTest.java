@@ -160,6 +160,21 @@ public class ClienteDAOTest {
 		List<Cliente> listaClientes = dao.buscaPorParteSobrenome(clienteBusca);
 		assertEquals(1, listaClientes.size());
 	}
+	
+	@Test
+	public void testa_busca_cliente_por_cpf() throws SQLException {
+		dao.cadastra(cliente1);
+		Cliente clienteBanco = dao.buscaClienteRG(cliente1);
+		assertEquals(clienteBanco.getNome(), cliente1.getNome());
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void testa_busca_rg_invalido() throws SQLException {
+		Cliente cliente = new Cliente();
+		cliente.setRg("0123");
+		dao.buscaClienteRG(cliente);
+	}
+	
 }
 
 

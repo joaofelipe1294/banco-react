@@ -179,6 +179,33 @@ public class ClienteDAO {
 		}
 	}
 	
+	public Cliente buscaClienteRG(Cliente clienteBusca) {
+		String sql = "SELECT * FROM clientes WHERE rg = ?";
+		try (PreparedStatement statement = this.connection.prepareStatement(sql)){
+			statement.setString(1, clienteBusca.getRg());
+			try (ResultSet resultSet = statement.executeQuery()){
+				if(resultSet.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setClienteId(resultSet.getLong("cliente_id"));
+					cliente.setNome(resultSet.getString("nome"));
+					cliente.setSobrenome(resultSet.getString("sobrenome"));
+					cliente.setCpf(resultSet.getString("cpf"));
+					cliente.setRg(resultSet.getString("rg"));
+					cliente.setSalario(resultSet.getDouble("salario"));
+					return cliente;
+				}else {
+					throw new RuntimeException("Nenhum resultado obtido.");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
+	
 }
 
 
