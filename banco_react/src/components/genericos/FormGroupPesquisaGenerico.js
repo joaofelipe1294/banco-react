@@ -9,7 +9,7 @@ export default class FormGroupPesquisaGenerico extends Component{
             <div class="input-group mb-3">
                 <input className="form-control" placeholder={this.props.label} aria-label={this.props.label} type = {this.props.type} aria-describedby="basic-addon2"/>
                 <div className="input-group-append">
-                    <button className="btn btn-outline-info" type="button">
+                    <button className="btn btn-outline-info" type="button" onClick = {this.props.onClick}>
                         <FontAwesomeIcon icon="search"/>
                     </button>
                 </div>

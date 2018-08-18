@@ -19,11 +19,7 @@ export default class FormBuscaCliente extends Component{
                     </div>
                 </div>
             </div>
-
         );
     }
-
-
-
 }
 
